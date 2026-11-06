@@ -26,6 +26,19 @@ Open http://localhost:5080. The SQLite file (`App_Data/autorefresh.db`) is creat
 
 Per-column filters on numeric columns accept `>`, `<`, `>=`, `<=`, `=` (e.g. `>1000`).
 
+## Two front ends (same backend, same behaviour)
+
+| URL | Implementation |
+|---|---|
+| `/` | Hand-written grid (`wwwroot/js/grid.js`) |
+| `/datatable` | [DataTables.js](https://datatables.net) 2.x + jQuery (`wwwroot/js/datatable-grid.js`) |
+
+The DataTables page keeps the exact behaviour of the custom grid: DataTables' own search box, pager and
+header sorting are replaced by the same substring global search, per-column filters (incl. numeric
+`> < >= <= =`), asc → desc → Id-order sort cycle (empty values last) and 100-row pager. Pushed changes
+go through the DataTables row API (`row().data()`, `rows.add()`, `rows().remove()`); updated rows are
+patched in place without a redraw. Libraries are vendored in `wwwroot/lib` (no CDN needed).
+
 ## Trying it
 
 * **Simulator** (top-right): writes random updates/inserts/deletes straight to the DB at 1–50 ops/s.

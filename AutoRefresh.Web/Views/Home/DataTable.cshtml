@@ -1,0 +1,61 @@
+@{
+    ViewData["Title"] = "Live Records (DataTables)";
+}
+
+<header class="bar">
+    <div class="title">
+        <h1>Live Records</h1>
+        <span id="conn" class="pill pill-off" title="SignalR connection state">Connecting…</span>
+        <nav class="views"><a href="~/">Custom grid</a> · <b>DataTables</b></nav>
+    </div>
+
+    <div class="stats">
+        <span><b id="stat-total">0</b> records</span>
+        <span><b id="stat-filtered">0</b> shown</span>
+        <span>Last change: <b id="stat-last">—</b></span>
+        <span>Changes received: <b id="stat-changes">0</b></span>
+    </div>
+
+    <div class="tools">
+        <input id="global-search" type="search" placeholder="Search all columns…" autocomplete="off" />
+        <button id="btn-clear" type="button" title="Clear all filters and sorting">Reset</button>
+        <button id="btn-add" type="button" class="primary">+ Add record</button>
+        <span class="sim">
+            Simulator
+            <select id="sim-rate" title="Random DB changes per second">
+                <option value="1">1/s</option>
+                <option value="5" selected>5/s</option>
+                <option value="20">20/s</option>
+                <option value="50">50/s</option>
+            </select>
+            <button id="btn-sim" type="button">Start</button>
+        </span>
+    </div>
+</header>
+
+<main class="grid-wrap">
+    <div id="loading" class="loading">Loading records…</div>
+    <table id="grid" hidden>
+        <thead></thead>
+        <tbody></tbody>
+    </table>
+</main>
+
+<footer class="pager" id="pager"></footer>
+
+<dialog id="dlg">
+    <form method="dialog" id="dlg-form">
+        <h2 id="dlg-title">Record</h2>
+        <div id="dlg-fields" class="fields"></div>
+        <div class="dlg-actions">
+            <button type="button" id="dlg-cancel">Cancel</button>
+            <button type="submit" class="primary" id="dlg-save">Save</button>
+        </div>
+    </form>
+</dialog>
+
+@section Scripts {
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/datatables/dataTables.min.js"></script>
+    <script src="~/js/datatable-grid.js" asp-append-version="true"></script>
+}
